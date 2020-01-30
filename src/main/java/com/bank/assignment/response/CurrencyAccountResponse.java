@@ -1,4 +1,4 @@
-package com.bank.assignment;
+package com.bank.assignment.response;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -14,9 +14,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class CurrencyAccount implements Serializable {
+public class CurrencyAccountResponse implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -7655111929056448013L;
 	
 	private String accountNumber;
 	private String currency;

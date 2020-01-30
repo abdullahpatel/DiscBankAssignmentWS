@@ -1,4 +1,4 @@
-package com.bank.assignment;
+package com.bank.assignment.repository;
 
 import java.util.List;
 
@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+
+import com.bank.assignment.entity.Allocation;
 
 @Mapper
 public interface ATMRepository {
@@ -21,8 +23,8 @@ public interface ATMRepository {
 	 @Results(value = {
 		      @Result(property = "atmId", column = "atm_id"),
 		      @Result(property = "count", column = "count"),
-		      @Result(property = "value", column = "value"),
-		      @Result(property = "denominationType", column = "denomination_type_code")
+		      @Result(property = "denomination.value", column = "value"),
+		      @Result(property = "denomination.denominationType.denominationTypeCode", column = "denomination_type_code")
 		   })
 	public List<Allocation> findATMAllocation(@Param("atmId") Long atmId);
 

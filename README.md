@@ -1,20 +1,34 @@
-# Discovery Bank Assigment
+# Discovery Bank Assignment 
+(Bank Balance and Dispensing System)
 
 ## Notes
 
-### Building / Runnng
+This is an updated version of the original version done. I have added a webservice font-end to the back-end calls been made, and some general changes have been made.
+
+
+### Building / Running
+A. Execute the below command to build the jar file with maven 
 
     mvn clean install
 
+and once the code builds successfully - in the target folder you can execute the following to run the code:
+
+	java -jar disc-bank-assignment-ws-0.0.1-SNAPSHOT.jar
+
+OR
+
+B. Running the code as a sprint boot app via maven - execute the following command
+ 
+	mvn spring-boot:run
+
+	
 ### Testing
 
-    mvn test
-	Run using ??? and can test http://localhost:8080/swagger-ui.html
+Swagger has been added to the code to be able to easily test the webservice. Once the code is running (as per steps above), you can go to the following url, to get the swagger UI interface, where calls can be executed:
+
+	http://localhost:8080/swagger-ui.html
 
 ## Use Cases
-
-* Only columns in the database needed for the assignment was coded into java - did not create unnecessary code at this stage
-* Error messages shown to user will be handled by the Controller/UI layer
 
 ### 4.2.1
 
@@ -40,7 +54,6 @@ The SQL Script created for this use case is:
 	AND ca.account_type_code = at.account_type_code
 	ORDER BY client_id asc;
 
-(Above solution is not 100% ideal because if two accounts have the same max display_balance it may return extra/incorrect information)
 
 
 ### 4.2.5

@@ -2,6 +2,8 @@ package com.bank.assignment.controller;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,10 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bank.assignment.ClientAccount;
-import com.bank.assignment.ClientAccountService;
-import com.bank.assignment.CurrencyAccount;
-import com.bank.assignment.DispensingNotes;
+import com.bank.assignment.entity.ClientAccount;
+import com.bank.assignment.response.CurrencyAccountResponse;
+import com.bank.assignment.service.ClientAccountService;
 
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +58,7 @@ public class ClientAccountController {
 			@ApiParam(value = "Timestamp in milliseconds of clients interaction", required = true)				
 		      @RequestParam(REQUEST_PARAM_TIMESTAMP) Long timestamp) {
 		log.debug("getClientCurrencyAccounts() STARTING");	
-		List<CurrencyAccount> accounts = clientAccountService.findCurrencyAccountsByClient(clientId, timestamp);
+		List<CurrencyAccountResponse> accounts = clientAccountService.findCurrencyAccountsByClient(clientId, timestamp);
 		if (accounts.isEmpty()) {
 			log.debug("No accounts to display");
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No accounts to display");
@@ -80,14 +81,18 @@ public class ClientAccountController {
 			@ApiParam(value = "Timestamp in milliseconds of clients interaction", required = true)
 				@RequestParam(REQUEST_PARAM_TIMESTAMP) Long timestamp) {
 		log.debug("clientWithdrawCash() STARTING");	
-		List<DispensingNotes> dispensingNotes = clientAccountService.withdrawCash(atmId, clientId, accountNumber, requiredAmount, timestamp);
-// NEED TO DO PROPER ERROR HANDLING HERE _ THEIR ARE MULTIPLE SCENARIOS TO CATER FOR _ IMPACTS RETURN OBJECT		
+		Map<String, Object> dispensingNotes = clientAccountService.withdrawCash(atmId, clientId, accountNumber, requiredAmount, timestamp);
+		
 		if (dispensingNotes.isEmpty()) {
-			log.debug("No accounts to display");
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No accounts to display");
+			log.debug("Unknown error has occurred");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unknown error has occurred");
 		} else {
-			log.debug("Returning dispensingNotes with size="+dispensingNotes.size());
-		    return ResponseEntity.ok(dispensingNotes);
+			Entry<String, Object> element = dispensingNotes.entrySet().iterator().next();
+			if ("error".equals(element.getKey())) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(element.getValue());
+			} else {
+				return ResponseEntity.ok(element);	
+			}	    
 		}
 	}
 }

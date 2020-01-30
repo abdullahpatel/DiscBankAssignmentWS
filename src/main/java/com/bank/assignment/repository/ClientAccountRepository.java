@@ -1,4 +1,4 @@
-package com.bank.assignment;
+package com.bank.assignment.repository;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -9,6 +9,8 @@ import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+
+import com.bank.assignment.entity.ClientAccount;
 
 @Mapper
 public interface ClientAccountRepository {
@@ -51,7 +53,7 @@ public interface ClientAccountRepository {
 	 @Results(value = {
 			  @Result(property = "clientAccountNumber", column = "client_account_number"), 
 			  @Result(property = "displayBalance", column = "display_balance"),
-			  @Result(property = "accountTypeCode.accountTypeCode", column = "accountTypeCode"),
+			  @Result(property = "accountTypeCode.accountTypeCode", column = "account_type_code"),
 			  @Result(property = "accountTypeCode.description", column = "description")
 		   })	
 	public ClientAccount findCurrentBalance(@Param("clientAccountNumber") String clientAccountNumber);

@@ -8,6 +8,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.bank.assignment.entity.Allocation;
+import com.bank.assignment.entity.ClientAccount;
+import com.bank.assignment.repository.ATMRepository;
+import com.bank.assignment.repository.ClientAccountRepository;
+import com.bank.assignment.response.CurrencyAccountResponse;
+import com.bank.assignment.service.ClientAccountService;
+
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.boot.test.context.SpringBootTest;
@@ -69,9 +76,9 @@ class DiscBankAssignmentApplicationTests {
 	public void testUseCase2_service() {
 		log.info(" - - - - - - - - - - - - - - - - - - ");
 		log.info("UseCase4.2.2 - data from service");
-		List<CurrencyAccount> accounts = clientAccService.findCurrencyAccountsByClient(new Long(2), new Long(1));
+		List<CurrencyAccountResponse> accounts = clientAccService.findCurrencyAccountsByClient(new Long(2), new Long(1));
 		log.info("accounts.size()="+accounts.size());
-		for (CurrencyAccount account : accounts) {
+		for (CurrencyAccountResponse account : accounts) {
 			log.info("account = " + account);
 		}
 	}

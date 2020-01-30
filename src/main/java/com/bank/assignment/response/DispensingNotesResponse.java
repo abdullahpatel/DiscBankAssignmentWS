@@ -1,4 +1,6 @@
-package com.bank.assignment;
+package com.bank.assignment.response;
+
+import java.io.Serializable;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,8 +13,10 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class DispensingNotes {
+public class DispensingNotesResponse implements Serializable {
 
+	private static final long serialVersionUID = 7610282257442269082L;
+	
 	private int noteAmount;
 	private int toDispense;
 	
